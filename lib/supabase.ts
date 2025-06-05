@@ -82,10 +82,26 @@ export interface User {
   phone?: string
   salla_token?: string
   salla_store_id?: string
+  salla_connected?: boolean
   whatsapp_status: boolean
   whatsapp_session_data?: any
   whatsapp_number?: string
   whatsapp_connected?: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface SallaConnection {
+  id: string
+  user_id: string
+  store_id: string
+  store_name: string
+  access_token: string
+  refresh_token: string
+  token_expires_at?: string
+  webhook_secret?: string
+  is_active: boolean
+  last_sync_at?: string
   created_at: string
   updated_at: string
 }
@@ -218,6 +234,7 @@ const mockUser: User = {
   email: "demo@example.com",
   phone: "+966501234567",
   whatsapp_status: false,
+  salla_connected: false,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 }
@@ -373,7 +390,8 @@ export const database = {
           *,
           user_roles (
             role:roles (*)
-          )
+          ),
+          salla_connections (*)
         `)
         .eq("id", user.id)
         .single()
@@ -431,6 +449,55 @@ export const database = {
       return {
         data: null,
         error: { message: "خطأ في تحديث بيانات المستخدم" },
+      }
+    }
+  },
+
+  // اتصالات سلة
+  getSallaConnection: async () => {
+    try {
+      // في وضع التطوير، إرجاع بيانات وهمية
+      if (!isSupabaseConfigured) {
+        console.log("Development mode: Returning mock Salla connection")
+        return {
+          data: {
+            id: "mock-connection-id",
+            user_id: "mock-user-id",
+            store_id: "123456",
+            store_name: "متجر تجريبي",
+            access_token: "mock-access-token",
+            refresh_token: "mock-refresh-token",
+            is_active: true,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+          error: null,
+        }
+      }
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      if (!user) {
+        return {
+          data: null,
+          error: { message: "No authenticated user" },
+        }
+      }
+
+      const { data, error } = await supabase
+        .from("salla_connections")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("is_active", true)
+        .single()
+
+      return { data, error }
+    } catch (error) {
+      console.error("Database error:", error)
+      return {
+        data: null,
+        error: { message: "خطأ في جلب بيانات اتصال سلة" },
       }
     }
   },
