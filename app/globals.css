@@ -4,16 +4,16 @@
 
 /* تعريف الخطوط المخصصة */
 @font-face {
-  font-family: 'Effra Arabic';
-  src: url('/fonts/Effra CC Arbc Regular.otf') format('opentype');
+  font-family: "Effra Arabic";
+  src: url("/fonts/Effra CC Arbc Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Effra Arabic';
-  src: url('/fonts/Effra CC Arbc Bold.otf') format('opentype');
+  font-family: "Effra Arabic";
+  src: url("/fonts/Effra CC Arbc Bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -23,9 +23,9 @@
   :root {
     --background-rgb: 243, 244, 246; /* bg-gray-100 */
     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    --font-family-primary: 'Effra Arabic', var(--font-noto-sans-arabic), system-ui, sans-serif;
+    --font-family-primary: "Effra Arabic", var(--font-noto-sans-arabic), system-ui, sans-serif;
   }
-  
+
   /* تحسين عرض النصوص العربية */
   html {
     text-rendering: optimizeLegibility;
@@ -81,7 +81,10 @@ body {
 }
 
 /* تحسين عرض النصوص في المكونات */
-input, select, textarea, button {
+input,
+select,
+textarea,
+button {
   font-family: inherit;
   text-align: right;
 }
