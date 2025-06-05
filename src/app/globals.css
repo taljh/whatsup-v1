@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* تعريف الخطوط المخصصة */
+@font-face {
+  font-family: 'Effra Arabic';
+  src: url('/fonts/Effra CC Arbc Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Effra Arabic';
+  src: url('/fonts/Effra CC Arbc Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background-rgb: 243, 244, 246; /* bg-gray-100 */
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    --font-family-primary: 'Effra Arabic', var(--font-noto-sans-arabic), system-ui, sans-serif;
+  }
+  
+  /* تحسين عرض النصوص العربية */
+  html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 95%; /* تصغير النصوص قليلاً */
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: var(--font-family-primary);
+  direction: rtl;
+}
+
+/* تنسيقات مخصصة لدعم RTL */
+.ml-auto {
+  margin-left: auto !important;
+}
+
+.mr-auto {
+  margin-right: auto !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.ps-4 {
+  padding-right: 1rem !important;
+}
+
+.pe-4 {
+  padding-left: 1rem !important;
+}
+
+.card {
+  @apply rounded-2xl bg-white shadow-lg;
+  box-shadow: var(--card-shadow);
+}
+
+.app-container {
+  @apply flex p-6 md:p-8 lg:p-12 min-h-screen justify-center;
+}
+
+.layout-container {
+  @apply flex w-full max-w-6xl gap-6 mx-auto;
+}
+
+/* تحسين عرض النصوص في المكونات */
+input, select, textarea, button {
+  font-family: inherit;
+  text-align: right;
+}
+
+/* تحسينات للفورم */
+.form-input {
+  @apply block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+}
